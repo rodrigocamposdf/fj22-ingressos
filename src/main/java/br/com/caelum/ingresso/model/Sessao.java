@@ -11,9 +11,6 @@ import javax.persistence.ManyToOne;
 @Entity
 public class Sessao {
 
-	public Sessao() {
-	}
-
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
@@ -63,4 +60,6 @@ public class Sessao {
 		this.filme = filme;
 	}
 
+	public Sessao() {
+	}
 }

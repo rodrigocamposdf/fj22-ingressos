@@ -30,7 +30,7 @@ public class SessaoController {
 	@GetMapping("/admin/sessao")
 	public ModelAndView form(@RequestParam("salaId") Integer salaId, SessaoForm form) {
 
-		ModelAndView modelAndView = new ModelAndView("sessoes/sesao");
+		ModelAndView modelAndView = new ModelAndView("sessao/sessao");
 
 		modelAndView.addObject("sala", salaDao.findOne(salaId));
 		modelAndView.addObject("filmes", filmeDao.findAll());

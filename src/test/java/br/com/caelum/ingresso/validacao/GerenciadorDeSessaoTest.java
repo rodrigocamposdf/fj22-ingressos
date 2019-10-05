@@ -71,4 +71,5 @@ public class GerenciadorDeSessaoTest {
 			Sessao sessaoQueTerminaAmanha = new Sessao(LocalTime.parse("23:00:00"), rogueOne, sala3D);
 			Assert.assertFalse(gerenciador.cabe(sessaoQueTerminaAmanha));
 		}
+		
 	}

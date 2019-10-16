@@ -16,8 +16,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import br.com.caelum.ingresso.dao.FilmeDao;
+import br.com.caelum.ingresso.dao.LugarDao;
 import br.com.caelum.ingresso.dao.SalaDao;
 import br.com.caelum.ingresso.dao.SessaoDao;
+import br.com.caelum.ingresso.model.Carrinho;
 import br.com.caelum.ingresso.model.ImagemCapa;
 import br.com.caelum.ingresso.model.Sessao;
 import br.com.caelum.ingresso.model.SessaoForm;
@@ -33,9 +35,15 @@ public class SessaoController {
 	private FilmeDao filmeDao;
 	@Autowired
 	private SessaoDao sessaoDao;
+	
+	@Autowired
+	LugarDao lugarDao;
 
 	@Autowired
 	OmdbClient client;
+
+	@Autowired
+	private Carrinho carrinho;
 
 	@GetMapping("/admin/sessao")
 	public ModelAndView form(@RequestParam("salaId") Integer salaId, SessaoForm form) {
@@ -79,6 +87,13 @@ public class SessaoController {
 
 		modelAndView.addObject("sessao", sessao);
 		modelAndView.addObject("imagemCapa", imagemCapa.orElse(new ImagemCapa()));
+		return modelAndView;
+	}
+
+	@PostMapping("/compra/ingressos")
+	public ModelAndView enviarParaPagamento(CarrinhoForm carrinhoForm) {
+		ModelAndView modelAndView = new ModelAndView("redirect:/compra");
+		carrinhoForm.toIngressos(sessaoDao, lugarDao).forEach(carrinho::add);
 		return modelAndView;
 	}
 }
